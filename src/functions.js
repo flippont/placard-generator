@@ -1,8 +1,7 @@
 
 function printer() {
-    var container = document.querySelectorAll('.container')
-    elementWidth = window.innerWidth
-    output.style.width = "99.5vw"
+    output.style.width = "100vw"
+    elementWidth = 1440
     generate()
     window.print()
     noPrint.style.width = (window.innerWidth / 2) + "px"
@@ -15,7 +14,7 @@ function save() {
     list = []
     let splitText = textarea.value.split(",")
     for (let i = 0; i < splitText.length; i++) {
-        for (var j = 0; j < countriesFlags.length; j++) {
+        for (let j = 0; j < countriesFlags.length; j++) {
             console.log(splitText[i])
             if (countriesFlags[j].name.toLowerCase() == splitText[i].toLowerCase()) {
                 list.push(countriesFlags[j].name)
@@ -27,7 +26,7 @@ function save() {
 
 function search(ele) {
     if (event.key === 'Enter') {
-        for (var i = 0; i < countriesFlags.length; i++) {
+        for (let i = 0; i < countriesFlags.length; i++) {
             if (countriesFlags[i].name.toLowerCase() == ele.value.toLowerCase()) {
                 list.push(countriesFlags[i].name)
             }
@@ -39,11 +38,11 @@ function search(ele) {
 }
 
 function generate() {
-    var flagName = "";
+    let flagName = "";
     content.innerHTML = "";
     let calcWidth = (elementWidth - 100)
-    for (var i = 0; i < list.length; i++) {
-        for (var j = 0; j < countriesFlags.length; j++) {
+    for (let i = 0; i < list.length; i++) {
+        for (let j = 0; j < countriesFlags.length; j++) {
             if (countriesFlags[j].name.toLowerCase() == list[i].toLowerCase()) {
                 if (countriesFlags[j].alias != undefined) {
                     flagName = countriesFlags[j].alias;
@@ -51,7 +50,7 @@ function generate() {
                     flagName = countriesFlags[j].name;
                 }
 
-                var d = "<div class='container' style='width: " + calcWidth + "px; height: " + (calcWidth / Math.sqrt(2)) + "px'>"
+                let d = "<div class='container' style='width: " + calcWidth + "px; height: " + (calcWidth / Math.sqrt(2)) + "px'>"
                 d += "<img class='flag' src='" + countriesFlags[j].normal + "'>";
                 d += "<p class='delegate'>" + flagName + "</p>";
                 d += "</div>";
@@ -63,14 +62,13 @@ function generate() {
 }
 
 function drawPlacard() {
-    var delegates = document.querySelectorAll('.delegate');
-    var images = document.querySelectorAll('.flag');
-    var container = document.querySelectorAll('.container')
-    for (var j = 0; j < images.length; j++) {
+    let delegates = document.querySelectorAll('.delegate');
+    let images = document.querySelectorAll('.flag');
+    for (let j = 0; j < images.length; j++) {
         images[j].style.width = imageSize + "%";
     }
-    for (var i = 0; i < delegates.length; i++) {
-        var delegate = delegates[i];
+    for (let i = 0; i < delegates.length; i++) {
+        let delegate = delegates[i];
         delegate.style.fontFamily = fontFamily;
         delegate.style.fontSize = (elementWidth / (100 - fontSize)) + "px";
         if (delegates[i].innerHTML.includes("Nepal") && imageSize > 30) {
@@ -89,22 +87,22 @@ function drawPlacard() {
 }
 
 function Export2Word(element, filename = '') {
-    var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
-    var postHtml = "</body></html>";
-    var html = preHtml + document.getElementById(element).innerHTML + postHtml;
+    let preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+    let postHtml = "</body></html>";
+    let html = preHtml + document.getElementById(element).innerHTML + postHtml;
 
-    var blob = new Blob(['\ufeff', html], {
+    let blob = new Blob(['\ufeff', html], {
         type: 'application/msword'
     });
 
     // Specify link url
-    var url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
+    let url = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(html);
 
     // Specify file name
     filename = filename ? filename + '.doc' : 'document.doc';
 
     // Create download link element
-    var downloadLink = document.createElement("a");
+    let downloadLink = document.createElement("a");
 
     document.body.appendChild(downloadLink);
 
