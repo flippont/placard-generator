@@ -4,7 +4,6 @@ fontarea.addEventListener("change", function() {
     fontSize = this.value;
     drawPlacard()
 })
-document.getElementById('upload').addEventListener('change', handleFileSelect, false);
 
 imagesize.addEventListener("change", function() {
     enforceMinMax(imagesize)
