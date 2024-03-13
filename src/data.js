@@ -1,3 +1,4 @@
+// Thanks to https://gist.github.com/bantya/9a619ab7b8f262e83fda
 var countriesFlags = [
     { "name": "Afghanistan", "mini": "http://flags.fmcdn.net/data/flags/mini/af.png", "normal": "http://flags.fmcdn.net/data/flags/big/af.png" },
     { "name": "Albania", "mini": "http://flags.fmcdn.net/data/flags/mini/al.png", "normal": "http://flags.fmcdn.net/data/flags/big/al.png" },
