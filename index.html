@@ -16,19 +16,13 @@
             overflow-x: hidden;
         }
 
-        .fixed {
-            position: fixed;
-            background-color: white;
-            padding: 10px;
-        }
-
         #content {
             position: absolute;
             width: 50%;
             overflow: auto;
             right: 0px;
             height: 100vh;
-            background: #fff;
+            background: #eee;
         }
 
         input {
@@ -45,26 +39,26 @@
             margin-top: 10px;
         }
 
-        input[type="file"] {
+        input:after {
             display: none;
         }
 
+        input[type="file"] {
+            display: none;
+        }
         .noPrint {
             text-align: left;
             position: fixed;
             box-sizing: border-box;
             padding: 50px;
-            resize: horizontal;
             width: 50%;
             height: 100%;
-            background: #fff;
-            border-right: 1px solid #ccc;
+            background-color: #fff;
             top: 0px;
             left: 0px;
             overflow: auto;
             z-index: 100;
         }
-
         .button {
             display: block;
             width: 100%;
@@ -91,7 +85,7 @@
             background: #eee;
             position: relative;
             cursor: pointer;
-            height: 34px;
+            min-height: 34px;
             margin-right: 10px;
             padding-left: 10px;
             line-height: 22px;
@@ -101,6 +95,19 @@
             margin-top: 10px;
         }
 
+        .crest {
+            background: #eee;
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            display: block;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-top: 10px;
+            font-size: 13px;
+            text-align: center;
+        }
         select {
             display: block;
             padding: 10px 15px 10px 15px;
@@ -111,21 +118,31 @@
             border-radius: 4px;
             font-family: Arial, Helvetica, sans-serif;
             appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+            background: #eee;
             background-repeat: no-repeat;
             background-position: right 10px top 50%;
             margin-top: 10px;
         }
-
         .noPrint>* {
             box-sizing: border-box;
             width: 100%;
         }
+        .flexCont {
+            display: flex;
+        }
+        .flexCont button {
+            width: 50%;
+        }
+        .flexCont button:last-child {
+            margin-right: 0px;
+        }
+        #input {
+            width: 100%;
+        }
 
-        input {
-            font-size: 15px;
-            line-height: 25px;
-            height: 40px;
+        .quantity {
+            width: 50px;
+            margin-right: 0px;
         }
 
         .units {
@@ -133,8 +150,6 @@
         }
 
         .container {
-            justify-content: center;
-            text-align: center;
             margin: auto;
             margin-top: 10px;
             margin-bottom: 10px;
@@ -143,9 +158,31 @@
             border-radius: 4px;
             border: 1px solid #ccc;
         }
-
-        img {
+        .crestIMG {
+            width: 5%;
+            float: right;
+            margin-right: 2%;
+        }
+        .flag {
             margin-top: 10%;
+            align-self: center;
+            margin-left: 50%;
+            transform: translate(-50%, 0%);
+            border: 5px solid #000;
+        }
+        .delegate {
+            text-align: center;
+        }
+        .footer {
+            position: absolute;
+            float: left;
+            width: calc(100% - 100px);
+            margin-top: calc((100% - 100px) / 1.5 - 3%);
+        }
+        .school {
+            float: left;
+            z-index: -1;
+            margin-left: 2%;
         }
 
         @media print {
@@ -154,11 +191,13 @@
                 margin: 0px;
             }
 
-            .noPrint,
-            .fixed {
+            .noPrint {
                 display: none;
             }
-
+            .footer {
+                width: 100%;
+                margin-top: calc(100% / 1.5 - 5%);
+            }
             #content {
                 left: 0;
                 right: 0;
@@ -167,7 +206,10 @@
                 overflow: visible;
                 background: #000;
             }
-
+            .flag {
+                margin-left: 0;
+                transform: translate(0%, 0%);
+            }
             .container {
                 page-break-after: always;
                 margin: 0px;
@@ -180,37 +222,40 @@
         <div class="noPrint">
 
             <h1>Placard Generator</h1>
-            <p>Type the country name in the textbox and press enter.</p>
-            <input type="text" name="country" list="countrylist" id="input" onkeydown="search(this)"
-                placeholder="Enter a country and press enter">
+            <p>Type the country name in the textbox, define the quantity and press enter or click "add".</p>
+            <div class="flexCont">
+                <input type="text" name="country" list="countrylist" id="input" onkeydown="search(this)"
+                    placeholder="Enter a country name">
+                <input type="number" name="quantity" value="1" id="quantity" class="quantity" min="1" max="50"
+                    onblur=enforceMinMax(this) step="1">
+            </div>
+            <button onclick="search(document.getElementById('input'), 'button')">Add</button>
             <datalist id="countrylist">
             </datalist>
             </br>
             </br>
-            <label>Output</label>
+            <label><b>Output</b></label>
             </br>
             </br>
             <textarea name="output" id="output" cols="30" rows="10"></textarea>
-            <button onclick="generate();">Generate</button>
-            <button onclick="save();">Save list from Textarea</button>
-            <label class="button" for="upload">Load from Excel</label>
-            <form enctype="multipart/form-data">
-                <input id="upload" type=file name="files[]" disabled>
-            </form>
+            <div class="flexCont">
+                <button onclick="delList();">Clear list</button>
+                <button onclick="saveList();">Save list from Textarea</button>
+            </div>
             </br>
+            <p><b>Style</b></p>
             <label>Image size in %</label>
             <input type="number" value="45" min="1" max="45" name="size" onblur=enforceMinMax(this) id="image-size">
             </br>
             </br>
             <label>Font size in pixels</label>
             <input type="number" value="50" min="1" max="75" name="size" onblur=enforceMinMax(this) id="size">
-            </br>
-            </br>
-            <label><b>Font</b></label>
+
+            <p><b>Font</b></p>
             <select id="fonts" name="fonts">
-                <option value="Arial">Arial</option>
-                <option value="'Times New Roman', Times, serif">Times New Roman</option>
                 <option value="sans-serif">sans-serif</option>
+                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                <option value="cursive">cursive</option>
                 <option value="monospace">monospace</option>
                 <option value="Impact">Impact</option>
             </select>
@@ -219,8 +264,19 @@
                 <option value="">normal</option>
                 <option value="italic">italic</option>
             </select>
+            <p><b>School</b></p>
+            <button onclick="removeCrest()">Remove</button>
             </br>
-            <label><b>Export</b></label>
+            </br>
+            <label>School Crest</label>
+            </br>
+            <label for="upload" class="crest">Upload Image File</label>
+            <input id="upload" type="file" onchange="upload()" accept="image/*">
+            </br>
+            <label>School Name (Hit enter to submit)</label>
+            <input type="text" value="The Highschool Dublin" onkeydown="changeSchool(this)">
+
+            <p><b>Export</b></p>
             <button onclick="Export2Word('content', 'flag');">Export as .docx</button>
             <button onclick="printer();">Print</button>
         </div>

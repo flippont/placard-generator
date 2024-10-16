@@ -1,3 +1,8 @@
+imagesize.addEventListener("change", function() {
+    enforceMinMax(imagesize)
+    imageSize = this.value;
+    drawPlacard()
+})
 
 fontarea.addEventListener("change", function() {
     enforceMinMax(fontarea)
