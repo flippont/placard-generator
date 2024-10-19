@@ -233,13 +233,13 @@ function drawBGCanvas() {
             image.src = countriesFlags[Math.floor(Math.random() * (countriesFlags.length - 1))].normal;
             image.crossOrigin = "anonymous"
             image.onload = () => {
-                ctx.drawImage(image, i * (canvas.width / 20), j * (( canvas.width / 20 ) / 1.5), canvas.width / 20, ( canvas.width / 20 ) / 1.5 );        
+                ctx.drawImage(image, i * (canvas.width / 10), j * (( canvas.width / 10 ) / 1.5), canvas.width / 20, ( canvas.width / 20 ) / 1.5 );        
                 loadArray.push(i,j)
                 if(loadArray.length == 200) { // This is a programming sin if I've ever seen one
                     var imageDataURL = canvas.toDataURL();
                     //set the dynamic image as the background
-                    document.body.style.background = 
-                    "url('"+imageDataURL+"') repeat";
+                    var style = document.body.style;
+                    style.setProperty("--background", "url('"+imageDataURL+"') repeat");
                 }
             }
         }

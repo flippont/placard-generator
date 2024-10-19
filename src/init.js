@@ -11,8 +11,8 @@ let schoolName = 'The Highschool Dublin'
 let loadArray = []
 
 const canvas = document.createElement("canvas")
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.width = window.innerWidth / 2;
+canvas.height = (window.innerWidth / 2) / 1.5;
 let ctx = canvas.getContext("2d");
 
 const content = document.getElementById("content");
