@@ -51,7 +51,7 @@ input[type="file"] {
     text-align: left;
     box-sizing: border-box;
     width: 100%;
-    padding: 20px;
+    padding: 50px;
     height: auto;
     left: 50%;
     margin:auto;
@@ -274,7 +274,7 @@ hr {
     user-select: none;
     grid-gap: 10px;
     width: 100%;
-    padding: 20px;
+    padding: 50px;
 }
 .grid {
     grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
