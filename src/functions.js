@@ -230,9 +230,16 @@ function drawBGCanvas() {
         for(let j=0; j<20; j++) {
             const image = new Image(60, 45); // Using optional size for image
             image.src = countriesFlags[Math.floor(Math.random() * (countriesFlags.length - 1))].normal;
+            image.crossOrigin = "anonymous"
             image.onload = () => {
                 ctx.drawImage(image, i * (canvas.width / 20), j * (( canvas.width / 20 ) / 1.5), canvas.width / 20, ( canvas.width / 20 ) / 1.5 );                
                 if(i == 19 && j == 19) {
+                    if(i == 19 && j == 19) {
+                        var imageDataURL = canvas.toDataURL();
+                        //set the dynamic image as the background
+                        document.body.style.background = 
+                        "url('"+imageDataURL+"') repeat";
+                    }
                     var imageDataURL = canvas.toDataURL();
                     //set the dynamic image as the background
                     document.body.style.background = 
@@ -243,3 +250,4 @@ function drawBGCanvas() {
     }
 }
 drawBGCanvas()
+generate()
