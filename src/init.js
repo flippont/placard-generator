@@ -9,7 +9,7 @@ let list = []
 let imageURL = './src/images/highschool.gif'
 let schoolName = 'The Highschool Dublin'
 
-const canvas = document.getElementById("canvas")
+const canvas = document.createElement("canvas")
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");

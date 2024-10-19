@@ -95,12 +95,12 @@ function generate() {
     }
     let calcWidth = (window.innerWidth/2 - 100)
     preview.innerHTML = ""
-    preview.appendChild(generatePlacard(schoolName, imageURL, (countriesFlags[randomCountry].alias != undefined) ? countriesFlags[randomCountry].alias : countriesFlags[randomCountry].name, countriesFlags[randomCountry].normal, -1))
+    preview.appendChild(generatePlacard(schoolName, imageURL, (countriesFlags[randomCountry].alias != "") ? countriesFlags[randomCountry].alias : countriesFlags[randomCountry].name, countriesFlags[randomCountry].normal, -1))
 
     for (let i = 0; i < list.length; i++) {
         for (let j = 0; j < countriesFlags.length; j++) {
             if (countriesFlags[j].name.toLowerCase() == list[i].toLowerCase()) {
-                if (countriesFlags[j].alias != undefined) {
+                if (countriesFlags[j].alias != "") {
                     flagName = countriesFlags[j].alias;
                 } else {
                     flagName = countriesFlags[j].name;
@@ -234,18 +234,12 @@ function drawBGCanvas() {
             image.onload = () => {
                 ctx.drawImage(image, i * (canvas.width / 20), j * (( canvas.width / 20 ) / 1.5), canvas.width / 20, ( canvas.width / 20 ) / 1.5 );                
                 if(i == 19 && j == 19) {
-                    if(i == 19 && j == 19) {
-                        var imageDataURL = canvas.toDataURL();
-                        //set the dynamic image as the background
-                        document.body.style.background = 
-                        "url('"+imageDataURL+"') repeat";
-                    }
                     var imageDataURL = canvas.toDataURL();
                     //set the dynamic image as the background
                     document.body.style.background = 
                     "url('"+imageDataURL+"') repeat";
                 }
-            };
+            }
         }
     }
 }
