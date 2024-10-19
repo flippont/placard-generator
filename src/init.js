@@ -1,10 +1,10 @@
 let fontFamily = "sans-serif";
 let fontType = "bold";
-let fontSize = 70;
-let imageSize = 43;
+let currentView = "grid"
+let fontSize = 80;
+let imageSize = 45;
 let country = "";
 let source = "";
-let elementWidth = (window.innerWidth / 2)
 let list = []
 let imageURL = './src/images/highschool.gif'
 let schoolName = 'The Highschool Dublin'
@@ -35,5 +35,4 @@ for (let i = 0; i < countriesFlags.length; i++) {
 }
 
 let randomCountry = Math.floor(Math.random() * (countriesFlags.length - 1))
-drawBGCanvas()
 generate()
