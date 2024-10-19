@@ -10,65 +10,65 @@
         <div id="container">
             <div class="noPrint">
                 <h1>Placard Generator</h1>
-                <p>Type the country name in the textbox, define the quantity and press enter or click "add".</p>
-                <div class="flexCont">
+                <p>A versitile and needlessly arduous placard generator for Model United Nations</p>
+                <hr>
+                <div class="flexCont" style="margin-top: 20px;">
+                    <div style="width: 100%; margin-right: 30px;">
+                        <p style="margin-top: 0px;"><b>Image / Font size</b></p>
+                        <div class="flexCont" style="height: fit-content;">
+                            <input class="flexInput" type="number" value="45" min="1" max="45" name="size" onblur=enforceMinMax(this) id="image-size">
+                            <input class="flexInput" type="number" value="80" min="1" max="85" name="size" onblur=enforceMinMax(this) id="size">
+                        </div>
+                        <p><b>Font styles</b></p>
+                        <div class="flexCont" style="height: fit-content;">
+                            <select id="fonts" name="fonts">
+                                <option value="sans-serif">sans-serif</option>
+                                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                                <option value="cursive">cursive</option>
+                                <option value="monospace">monospace</option>
+                                <option value="Impact">Impact</option>
+                            </select>
+                            <select id="style" name="style">
+                                <option value="bold">bold</option>
+                                <option value="">normal</option>
+                                <option value="italic">italic</option>
+                            </select>
+                        </div>
+                        <p><b>School Footer</b></p>
+                        <input type="text" style="width: calc(100% - 10px);" value="The Highschool Dublin" onkeydown="changeSchool(this)">
+                        <div class="flexCont" style="height: fit-content; margin-top: 10px;">
+                            <label for="upload" class="crest">Upload Image File</label>
+                            <input id="upload" type="file" onchange="upload()" accept="image/*">
+                            <button style="margin-right: 10px;" onclick="removeCrest()">Remove</button>
+                        </div>
+                        <p><b>Output Text (For debug or people that like to do things manually)</b></p>
+                        <textarea name="output" id="output"placeholder="Registered flags go here as a list separated with commas.&#10E.g., "Brazil,China,Ireland'&#10&#10You can directly edit this and press the "Add" button"></textarea>
+                    </div>
+                    <div class="right">
+                        <p style="margin-top: 0px;"><b>Flag Preview</b></p>
+                        <div id="preview">
+                        </div>
+                    </div>
+                </div>
+                </br>
+                  
+                <div class="flexCont" style="margin-top: 30px;">
                     <input type="text" name="country" list="countrylist" id="input" onkeydown="search(this)"
                         placeholder="Enter a country name">
-                    <input type="number" name="quantity" value="1" id="quantity" class="quantity" min="1" max="50"
-                        onblur=enforceMinMax(this) step="1">
+                    <input type="number" name="quantity" value="1" id="quantity" class="quantity" min="1" max="50" onblur=enforceMinMax(this) step="1">
+                    <div class="right">
+                        <button class="leftButton" onclick="changeView('list', this);">☰</button>
+                        <button class="rightButton active" onclick="changeView('grid', this);">⋮⋮⋮</button>
+                        <button class="danger" onclick="delList();">Clear list</button>
+                        <button onclick="saveList();search(document.getElementById('input'), 'button')">Add</button>
+                        <button onclick="printer();">Print</button>
+                    </div>
                 </div>
-                <button onclick="search(document.getElementById('input'), 'button')">Add</button>
                 <datalist id="countrylist">
                 </datalist>
-                </br>
-                </br>
-                <label><b>Output</b></label>
-                </br>
-                </br>
-                <textarea name="output" id="output" cols="30" rows="10"></textarea>
-                <div class="flexCont">
-                    <button onclick="delList();">Clear list</button>
-                    <button onclick="saveList();">Save list from Textarea</button>
-                </div>
-                </br>
-                <p><b>Style</b></p>
-                <label>Image size in %</label>
-                <input type="number" value="45" min="1" max="45" name="size" onblur=enforceMinMax(this) id="image-size">
-                </br>
-                </br>
-                <label>Font size in pixels</label>
-                <input type="number" value="50" min="1" max="75" name="size" onblur=enforceMinMax(this) id="size">
-
-                <p><b>Font</b></p>
-                <select id="fonts" name="fonts">
-                    <option value="sans-serif">sans-serif</option>
-                    <option value="'Times New Roman', Times, serif">Times New Roman</option>
-                    <option value="cursive">cursive</option>
-                    <option value="monospace">monospace</option>
-                    <option value="Impact">Impact</option>
-                </select>
-                <select id="style" name="style">
-                    <option value="bold">bold</option>
-                    <option value="">normal</option>
-                    <option value="italic">italic</option>
-                </select>
-                <p><b>School</b></p>
-                <button onclick="removeCrest()">Remove</button>
-                </br>
-                </br>
-                <label>School Crest</label>
-                </br>
-                <label for="upload" class="crest">Upload Image File</label>
-                <input id="upload" type="file" onchange="upload()" accept="image/*">
-                </br>
-                <label>School Name (Hit enter to submit)</label>
-                <input type="text" value="The Highschool Dublin" onkeydown="changeSchool(this)">
-
-                <p><b>Export</b></p>
-                <button onclick="Export2Word('content', 'flag');">Export as .docx</button>
-                <button onclick="printer();">Print</button>
+            
             </div>
-            <div id="content">
+            <div id="content" class="grid">
             </div>
         </div>
         <script src="./src/data.js"></script>
