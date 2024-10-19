@@ -9,7 +9,7 @@ let list = []
 let imageURL = './src/images/highschool.gif'
 let schoolName = 'The Highschool Dublin'
 
-const canvas = document.createElement("canvas")
+const canvas = document.getElementById("canvas")
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");
@@ -35,4 +35,3 @@ for (let i = 0; i < countriesFlags.length; i++) {
 }
 
 let randomCountry = Math.floor(Math.random() * (countriesFlags.length - 1))
-generate()
