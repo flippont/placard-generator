@@ -226,7 +226,7 @@ function enforceMinMax(el) {
 }
 
 function drawBGCanvas() {
-    let loadArray = []
+    loadArray = []
     for(let i=0; i<20; i++) {
         for(let j=0; j<20; j++) {
             const image = new Image(60, 45); // Using optional size for image
@@ -235,7 +235,7 @@ function drawBGCanvas() {
             image.onload = () => {
                 ctx.drawImage(image, i * (canvas.width / 20), j * (( canvas.width / 20 ) / 1.5), canvas.width / 20, ( canvas.width / 20 ) / 1.5 );        
                 loadArray.push(i,j)
-                if(loadArray.length == 361) { // This is a programming sin if I've ever seen one
+                if(loadArray.length == 400) { // This is a programming sin if I've ever seen one
                     var imageDataURL = canvas.toDataURL();
                     //set the dynamic image as the background
                     document.body.style.background = 

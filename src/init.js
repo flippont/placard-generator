@@ -8,6 +8,7 @@ let source = "";
 let list = []
 let imageURL = './src/images/highschool.gif'
 let schoolName = 'The Highschool Dublin'
+let loadArray = []
 
 const canvas = document.createElement("canvas")
 canvas.width = window.innerWidth;
