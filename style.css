@@ -53,7 +53,7 @@ input {
     padding-right: 15px;
     line-height: 22px;
     border: 1px solid var(--bdgray);
-    background: var(--bdgray);
+    background: var(--bggray);
     border-radius: 4px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
@@ -67,11 +67,23 @@ input:after {
 input[type="file"] {
     display: none;
 }
+input[type="checkbox"] {
+    border-radius: 3px;
+    height: 20px;
+    width: 20px;
+    appearance: none;
+    padding: 0;
+    display: inline;
+}
+input[type="checkbox"]:checked {
+    appearance: auto;
+}
 .noPrint {
     text-align: left;
     box-sizing: border-box;
     width: 100%;
     padding: 50px;
+    padding-top: 20px;
     height: auto;
     left: 50%;
     margin:auto;
@@ -84,12 +96,12 @@ input[type="file"] {
 }
 textarea {
     border: 1px solid var(--bdgray);
-    background: var(--bdgray);
+    background: var(--bggray);
     border-radius: 4px;
     width: calc(100% - 10px);
     padding: 10px;
     resize: vertical;
-    height: 100px;
+    height: 132px;
     font-size: 13px;
 }
 .empty {
@@ -101,7 +113,6 @@ textarea {
     text-align: center;
 }
 button {
-    background: var(--white);
     position: relative;
     cursor: pointer;
     min-height: 34px;
@@ -110,7 +121,7 @@ button {
     padding-right: 10px;
     line-height: 22px;
     border: 1px solid var(--bdgray);
-    background: var(--bdgray);
+    background: var(--bggray);
     border-radius: 4px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
@@ -120,7 +131,7 @@ button:hover {
     opacity: 1;
 }
 .grid .container{
-    width: 300px;
+    width: 280px;
     padding-bottom: 195px;
     margin: 0;
     display: inline;
@@ -157,11 +168,11 @@ button:hover {
 .crest {
     background: var(--white);
     cursor: pointer;
-    padding: 10px;
     border: 1px solid var(--bdgray);
-    background: var(--bdgray);
+    background: var(--bggray);
     border-radius: 4px;
-    width: 100%;
+    line-height: 33px;
+    width: 100px;
     display: block;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 13px;
@@ -174,11 +185,11 @@ select {
     cursor: pointer;
     box-shadow: none;
     border: 1px solid var(--bdgray);
-    background: var(--bdgray);
+    background: var(--bggray);
     border-radius: 4px;
     font-family: Arial, Helvetica, sans-serif;
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='32'%3E%3Cpath fill='%23567; fill-rule='evenodd' d='m16 18-4 4-4-4zm-8-4h8l-4-4z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='32'%3E%3Cpath fill='%23567' fill-rule='evenodd' d='m16 18-4 4-4-4zm-8-4h8l-4-4z'/%3E%3C/svg%3E");
     background-position: 100% 50%;
     background-repeat: no-repeat;
     width: 50%;
@@ -254,9 +265,6 @@ summary {
     text-align: center;
     justify-content: center;
 }
-.danger:hover {
-    color: #ff3434;
-}
 .footer {
     width: 100%;
     margin-top: 55%;
@@ -270,7 +278,48 @@ summary {
 .flexInput {
     width: 50%;
 }
-
+.control {
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    justify-content: center;
+    line-height: 25px;
+}
+.control input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+.substitute {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background: var(--bggray);
+    border: 1px solid var(--bdgray);
+    border-radius: 2px;
+}
+.control .substitute:after {
+    left: 7px;
+    top: 3px;
+    width: 3px;
+    height: 8px;
+    border: solid var(--white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    content: '';
+    position: absolute;
+    display: none;
+}
+.control input:checked ~ .substitute {
+    background: var(--bdgray);
+}
+.control input:checked ~ .substitute:after {
+    display: block;
+}
 hr {
     border: 1px solid var(--bdgray);       
     border-bottom: none;
@@ -292,21 +341,27 @@ hr {
 
 #content {
     user-select: none;
-    grid-gap: 10px;
+    grid-gap: 5px;
     width: 100%;
     padding: 50px;
+    padding-top: 0px;
 }
 .grid {
-    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     display: grid;
 }
 .deleteBtn {
     background: none;
     float: right;
-    z-index: 999;
+    z-index: 100;
     border: none;
     display: none;
     font-size: 15px;
+}
+a {
+    color: #999;
+    text-decoration: none;
+    font-weight: 600;
 }
 .list .deleteBtn {
     display: block;
@@ -318,6 +373,60 @@ hr {
 }
 .deleteBtn:hover {
     color: #ff3434;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    width: 90%;
+    max-width: 850px;
+    height: auto;
+    background: var(--white);
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    border: 1px solid var(--bdgray);
+    border-radius: 4px;
+}
+#modalContent {
+    padding: 50px;
+}
+.modalHeader {
+    font-size: 20px;
+}
+.sticky {
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    border-bottom: 1px solid var(--bdgray);
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 49px;
+    width: calc(100% - 98px);
+    margin-bottom: 20px;
+    z-index: 200;
+    background: var(--white);
+}
+.cover {
+    display: none;
+    position: fixed;
+    top: 0;
+    cursor: pointer;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--black);
+    opacity: 0.5;
+}
+.closeModal {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+.rightSpan {
+    float: right; 
+    color: #CCC;
 }
 @media print {
     @page {

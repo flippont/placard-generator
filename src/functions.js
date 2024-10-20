@@ -1,20 +1,132 @@
-
 function printer() {
     changeView("grid", document.getElementsByClassName("rightButton")[0])
     drawPlacard(true)
     window.print()
     drawPlacard()
 }
-function removeCrest() {
-    imageURL = "";
-    schoolName = "";
-    generate()
-}
-function changeSchool(ele) {
-    if(event.key === "Enter") {
-        schoolName = ele.value;
+function removeCrest(element) {
+    if(element.innerHTML == "Remove") {
+        imageURL = "";
+        schoolName = "";
+        element.innerHTML = "Reset"
+        generate()
+    } else {
+        imageURL = "./src/images/highschool.gif"
+        schoolName = "The Highschool";
+        element.innerHTML = "Remove";
         generate()
     }
+    
+}
+function changeSchool(ele, element2) {
+    if(event.key === "Enter") {
+        schoolName = ele.value;
+        element2.innerHTML = "Remove"
+        generate()
+    }
+}
+
+function openModal(element) {
+    cover.style.display = "block"
+    modal.style.display = "block"
+    let modalCont = document.getElementById("modalContent")
+
+    modalCont.innerHTML = "";
+    if(element.dataset.confirm) {
+        let header = document.createElement("b")
+        let contents = document.createElement("p")
+        let button1 = document.createElement("button")
+        let button2 = document.createElement("button")
+        header.innerHTML = "Delete"
+        contents.innerHTML = element.dataset.confirm;
+        button1.innerHTML = "I'm sure"
+        button1.style.marginLeft = "0px"
+        button2.innerHTML = "I'll pass for now"
+
+        button1.onclick = () => {
+            delList()
+            closeModal()
+        }
+
+        button2.onclick = () => {
+            closeModal()
+        }
+
+        header.className = "modalHeader"
+        contents.className = "modalContent"
+
+        modalCont.appendChild(header)
+        modalCont.appendChild(contents)
+        modalCont.appendChild(button1)
+        modalCont.appendChild(button2)
+    } else {
+        let header = document.createElement("b")
+        let contents = document.createElement("p")
+        let input = document.createElement("input")
+        let button = document.createElement("button")
+        let label = document.createElement("label")
+        let span = document.createElement("span")
+        let span2 = document.createElement("span")
+        let checkbox = document.createElement("input")
+        let substitute = document.createElement("substitute")
+
+        label.innerHTML = "Print only mode"
+        span.innerHTML = "Make the reciever un-able to edit the list of placards. I.e., good for printing."
+        span2.innerHTML = "Output"
+        header.innerHTML = "Share"
+        contents.innerHTML = element.dataset.share;
+        let locations = new URL(window.location.href)
+        locations.searchParams.set("data", btoa(textarea.innerHTML))
+        locations.searchParams.set("imgsize", imageSize)
+        locations.searchParams.set("texttype", fontType)
+        locations.searchParams.set("textsize", fontSize)
+        locations.searchParams.set("font", fontFamily)
+        
+        input.value =  locations
+        button.innerHTML = "📋"
+
+        header.className = "modalHeader"
+        contents.className = "modalContent"
+        input.readOnly = true;
+        label.className = "control"
+        span.className = span2.className = "rightSpan"
+        substitute.className = "substitute"
+        let checked = false;
+        checkbox.onchange = () => {
+            checked = !checked;
+            let url = new URL(input.value)
+            if(checked) {
+                url.searchParams.set("print", true)
+                input.value = url
+            } else {
+                url.searchParams.delete("s")
+                input.value = url
+            }
+        }
+
+        button.onclick = () => {
+            input.select();
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value);
+        }
+
+        checkbox.type = "checkbox"
+        label.appendChild(span)
+        label.appendChild(checkbox)
+        label.appendChild(substitute)
+
+        modalCont.appendChild(header)
+        modalCont.appendChild(contents)
+        modalCont.appendChild(label)
+        modalCont.appendChild(input)
+        modalCont.appendChild(button)
+        modalCont.appendChild(span2)
+    }
+}
+
+function closeModal() {
+    cover.style.display = "none"
+    modal.style.display = "none"
 }
 
 function delList() {
@@ -23,23 +135,33 @@ function delList() {
     generate()
 }
 
+function checkList(element) {
+    document.getElementById('saveBtn').style.display='block'
+    if(element.value == prevValue) {
+        document.getElementById('saveBtn').style.display='none'
+    }
+}
+
 function saveList() {
     list = []
-    let splitText = textarea.value.split(",")
+    let splitText = textarea.value.split("/")
     for (let i = 0; i < splitText.length; i++) {
+        let furtherSplit = splitText[i].split(":")
         for (let j = 0; j < countriesFlags.length; j++) {
-            if (countriesFlags[j].name.toLowerCase() == splitText[i].toLowerCase()) {
-                list.push(countriesFlags[j].name)
-            }
+            if (countriesFlags[j].name.toLowerCase() == furtherSplit[0].replace(/\s/g, "").toLowerCase()) {
+                if(furtherSplit.length != 1) {
+                    for(let k=0; k < furtherSplit[1].replace(/\s/g, ""); k++) {
+                        list.push(countriesFlags[j].name)
+                    }
+
+                }            }
         }
     }
-    textarea.value = list
     generate()
 }
 
-function upload() {
+function upload(element) {
     const fileUploadInput = document.getElementById("upload");
-    console.log(fileUploadInput)
     // using index [0] to take the first file from the array
     const image = fileUploadInput.files[0];
 
@@ -57,6 +179,7 @@ function upload() {
     
     fileReader.onload = (fileReaderEvent) => {
         imageURL = fileReaderEvent.target.result;
+        element.innerHTML = "Remove"
         generate()
     }
 }
@@ -73,8 +196,6 @@ function search(ele, type = "search") {
                 }
             }
         }
-        textarea.value = list.join(",")
-        textarea.innerHTML = list.join(",");
         ele.value = ""
         generate()
     }
@@ -95,12 +216,23 @@ function generate() {
     }
     let calcWidth = (window.innerWidth/2 - 100)
     preview.innerHTML = ""
-    preview.appendChild(generatePlacard(schoolName, imageURL, (countriesFlags[randomCountry].alias != "") ? countriesFlags[randomCountry].alias : countriesFlags[randomCountry].name, countriesFlags[randomCountry].normal, -1))
+    preview.appendChild(generatePlacard(schoolName, imageURL, (countriesFlags[randomCountry].alias != undefined) ? countriesFlags[randomCountry].alias : countriesFlags[randomCountry].name, countriesFlags[randomCountry].normal, -1))
+    const counts = new Map()
+    list.forEach(function (x) { counts.set(x, (counts.get(x) || 0) + 1) });
+    console.log(JSON.stringify(counts))
+    let final = ""
+    for (let [key, value] of counts.entries()) { // Using the default iterator (could be `map.entries()` instead)
+        final += " " + key + " : " + value + " /"
+    }
 
+    textarea.value = final;
+    textarea.innerHTML = final;
+    prevValue = final;
+    counter.innerHTML = "You have " + (list.length || "no") + ((list.length == 1) ? " placard" : " placards");
     for (let i = 0; i < list.length; i++) {
         for (let j = 0; j < countriesFlags.length; j++) {
             if (countriesFlags[j].name.toLowerCase() == list[i].toLowerCase()) {
-                if (countriesFlags[j].alias != "") {
+                if (countriesFlags[j].alias != undefined) {
                     flagName = countriesFlags[j].alias;
                 } else {
                     flagName = countriesFlags[j].name;
@@ -140,13 +272,12 @@ function generatePlacard (schoolName, schoolURL, flagName, flagURL, index) {
     deleteButton.innerHTML = "✖"
     deleteButton.onclick = () => {
         content.removeChild(outerDiv)
-        console.log(index)
         list.splice(index, 1)
         textarea.value = list
         generate()
     }
 
-    if(index != -1) {
+    if(index != -1 && !justPrintMode) {
         outerDiv.appendChild(deleteButton)
     }
 
@@ -175,9 +306,20 @@ function drawPlacard(printer = false) {
     
     for (let i = 0; i < delegates.length; i++) {
         let delegate = delegates[i];
-        console.log(images[i].style.width)
         delegate.style.fontFamily = fontFamily;
         let elemSize = (printer) ? document.body.clientWidth : document.querySelectorAll(".container")[0].clientWidth
+
+        if(justPrintMode) {
+            noPrint.style.display = "none"
+            let element = document.querySelectorAll(".container")[1]
+            let buttons = document.getElementsByClassName("hideprint")
+            for(let j=0; j< buttons.length; j++) {
+                buttons[j].style.display = "none"
+            }
+            if(element != undefined) {
+                elemSize = element.clientWidth
+            }
+        }
         if(currentView == "list" && i != 0) {    
             delegate.style.fontSize = "17.5px";
             school[i].style.fontSize = "17.5px";
@@ -185,7 +327,6 @@ function drawPlacard(printer = false) {
             delegate.style.fontSize = (elemSize / (100 - fontSize)) + "px";
             school[i].style.fontSize = (elemSize / 50) + "px";
         }
-        console.log(delegate.style.fontSize)
         if (fontType == "bold") {
             delegate.style.fontWeight = "bold";
             delegate.style.fontStyle = "normal";
@@ -195,6 +336,7 @@ function drawPlacard(printer = false) {
         }
         
     }
+
 }
 
 function changeView(view, element) {
@@ -225,6 +367,27 @@ function enforceMinMax(el) {
     }
 }
 
+function toggleCounter() {
+    counterVis = !counterVis
+    if(counterVis) {
+        counter.style.display = "block"
+    } else {
+        counter.style.display = "none"
+    }
+}
+
+function toggleBackground(element) {
+    if(loadArray.length < 800) {flagBG = false; element.checked = false; return false}
+    flagBG = !flagBG;
+    var style = document.body.style;
+    if(flagBG) {
+        style.setProperty("--background", "url('"+backgroundURL+"') repeat");
+    } else {
+        style.setProperty("--background", "#FFF");
+
+    }
+}
+
 function drawBGCanvas() {
     loadArray = []
     for(let i=0; i<10; i++) {
@@ -245,5 +408,6 @@ function drawBGCanvas() {
         }
     }
 }
+
 drawBGCanvas()
-generate()
+saveList()

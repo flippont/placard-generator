@@ -35,42 +35,64 @@
                             </select>
                         </div>
                         <p><b>School Footer</b></p>
-                        <input type="text" style="width: calc(100% - 10px);" value="The Highschool Dublin" onkeydown="changeSchool(this)">
                         <div class="flexCont" style="height: fit-content; margin-top: 10px;">
-                            <label for="upload" class="crest">Upload Image File</label>
-                            <input id="upload" type="file" onchange="upload()" accept="image/*">
-                            <button style="margin-right: 10px;" onclick="removeCrest()">Remove</button>
+                            <input type="text" style="width: calc(80% - 10px);" value="The Highschool Dublin" onkeydown="changeSchool(this, document.getElementById('remove'))">
+                            <label for="upload" class="crest">Upload</label>
+                            <input id="upload" type="file" onchange="upload(document.getElementById('remove'))" accept="image/*">
+                            <button style="margin-right: 10px;" onclick="removeCrest(this)" id="remove">Remove</button>
                         </div>
                         <p><b>Output Text (For debug or people that like to do things manually)</b></p>
-                        <textarea name="output" id="output"placeholder="Registered flags go here as a list separated with commas.&#10E.g., "Brazil,China,Ireland'&#10&#10You can directly edit this and press the "Add" button"></textarea>
+                        <textarea name="output" id="output" onblur="checkList(this)" placeholder="Registered flags go here as a list separated with forward slashes. Semicolons separate name and quantity. &#10E.g., 'Brazil : 2 / China : 1 / Ireland : 3 /'&#10&#10You can directly edit this and press the 'save' button"></textarea>
+                        <button style="float: right; margin-right: 10px; display: none;" id="saveBtn" onclick="this.style.display='none';saveList()">Save</button>
                     </div>
                     <div class="right">
                         <p style="margin-top: 0px;"><b>Flag Preview</b></p>
                         <div id="preview">
                         </div>
+                        <p><b>General Settings</b></p>
+                        <label class="control">
+                            Flag Background
+                            <span class="rightSpan" id="loader">Not loaded yet...</span>
+                            <input onchange="toggleBackground(this)" type="checkbox" id="background" name="background" value="flags">
+                            <div class="substitute"></div>
+                        </label>
+                        <label class="control">
+                            Placard Counter
+                            <span class="rightSpan">Show No. of placards</span>
+                            <input onchange="toggleCounter()" type="checkbox" checked="true" id="counting" name="counting" value="flags">
+                            <div class="substitute"></div>
+                        </label>
+                        <a href="https://github.com/flippont/placard-generator" target="_blank">Github Repository</a>
+                        <span class="rightSpan">Source code</span>
                     </div>
                 </div>
                 </br>
-                  
-                <div class="flexCont" style="margin-top: 30px;">
-                    <input type="text" name="country" list="countrylist" id="input" onkeydown="search(this)"
-                        placeholder="Enter a country name">
-                    <input type="number" name="quantity" value="1" id="quantity" class="quantity" min="1" max="50" onblur=enforceMinMax(this) step="1">
-                    <div class="right">
-                        <button class="leftButton" onclick="changeView('list', this);">☰</button>
-                        <button class="rightButton active" onclick="changeView('grid', this);">⋮⋮⋮</button>
-                        <button class="danger" onclick="delList();">Clear list</button>
-                        <button onclick="saveList();search(document.getElementById('input'), 'button')">Add</button>
-                        <button onclick="printer();">Print</button>
-                    </div>
-                </div>
+                <p id="counter">You have no placards</p>
                 <datalist id="countrylist">
                 </datalist>
-            
+            </div>
+            <div class="flexCont sticky">
+                <input type="text" class="hideprint" name="country" list="countrylist" id="input" onkeydown="search(this)"
+                    placeholder="Enter a country name">
+                <input type="number" name="quantity" value="1" id="quantity" class="quantity hideprint" min="1" max="50" onblur=enforceMinMax(this) step="1">
+                <button onclick="search(document.getElementById('input'), 'button')" class="hideprint">Add</button>
+                <div class="right">
+                    <button class="leftButton" onclick="changeView('list', this);">☰</button>
+                    <button class="rightButton active" onclick="changeView('grid', this);">⋮⋮⋮</button>
+                    <button onclick="openModal(this);" class="hideprint" data-confirm="Are you sure you want to delete all items in this list?">Clear list</button>
+                    <button onclick="openModal(this);" class="hideprint" data-share="Copy the text in the textbox below, or more conveniently click the clipboard button.">Share</button>
+                    <button onclick="printer();">Print</button>
+                </div>
             </div>
             <div id="content" class="grid">
             </div>
         </div>
+        <div class="modal" id="modal">
+            <div class="closeModal" onclick="closeModal()">✖</div>
+            <div id="modalContent">
+            </div>
+        </div>
+        <div class="cover" id="cover" onclick="closeModal()"></div>    
         <script src="./src/data.js"></script>
         <script src="./src/init.js"></script>
         <script src="./src/functions.js"></script>
