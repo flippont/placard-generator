@@ -108,6 +108,7 @@ function openModal(element) {
             input.select();
             input.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(input.value);
+            alert('Copied to clipboard!')
         }
 
         checkbox.type = "checkbox"
@@ -216,7 +217,7 @@ function generate() {
     }
     let calcWidth = (window.innerWidth/2 - 100)
     preview.innerHTML = ""
-    preview.appendChild(generatePlacard(schoolName, imageURL, (countriesFlags[randomCountry].alias != undefined) ? countriesFlags[randomCountry].alias : countriesFlags[randomCountry].name, countriesFlags[randomCountry].normal, -1))
+    preview.appendChild(generatePlacard(schoolName, imageURL, (countriesFlags[randomCountry].alias != "") ? countriesFlags[randomCountry].alias : countriesFlags[randomCountry].name, countriesFlags[randomCountry].normal, -1))
     const counts = new Map()
     list.forEach(function (x) { counts.set(x, (counts.get(x) || 0) + 1) });
     console.log(JSON.stringify(counts))
@@ -232,7 +233,7 @@ function generate() {
     for (let i = 0; i < list.length; i++) {
         for (let j = 0; j < countriesFlags.length; j++) {
             if (countriesFlags[j].name.toLowerCase() == list[i].toLowerCase()) {
-                if (countriesFlags[j].alias != undefined) {
+                if (countriesFlags[j].alias != "") {
                     flagName = countriesFlags[j].alias;
                 } else {
                     flagName = countriesFlags[j].name;
@@ -399,10 +400,9 @@ function drawBGCanvas() {
                 ctx.drawImage(image, i * (canvas.width / 10), j * (( canvas.width / 10 ) / 1.5), canvas.width / 10, ( canvas.width / 10 ) / 1.5 );        
                 loadArray.push(i,j)
                 if(loadArray.length == 200) { // This is a programming sin if I've ever seen one
+                    document.getElementById('loader').innerHTML = "Loaded!"
                     var imageDataURL = canvas.toDataURL();
-                    //set the dynamic image as the background
-                    var style = document.body.style;
-                    style.setProperty("--background", "url('"+imageDataURL+"') repeat");
+                    backgroundURL = imageDataURL;
                 }
             }
         }
