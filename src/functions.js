@@ -378,7 +378,7 @@ function toggleCounter() {
 }
 
 function toggleBackground(element) {
-    if(loadArray.length < 800) {flagBG = false; element.checked = false; return false}
+    if(loadArray.length < 200) {flagBG = false; element.checked = false; return false}
     flagBG = !flagBG;
     var style = document.body.style;
     if(flagBG) {

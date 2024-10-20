@@ -13,22 +13,15 @@ The code is likely rather buggy.</br>
 If there are any problems related to the software, please contact me.
 
 ### How to use
-The screen is divided into two sections. The side bar, on the left hand side of the screen, and the preview on the right hand side of the screen</br>
-Start by going to the input at the top of the sidebar, and type out the name of the country you want to make a placard for. You can enter the [shortened version](#-shortened-country-name) of the country name, or the full country name here. </br>
-The output textarea below that, is there to show the countries you have selected in a list. You do have the option to edit this instead of the input above, for more efficiency. To edit this input to create placards, you have to type the name of the country in the [shortened version](#-shortened-country-name) and you have to separate countries with commas. If you put a space in between, it will break it. Once you are done typing, **always** click the button that says **"Save list from textarea"**.</br>
-Once you are happy with the list of countries you have created, click the **"Generate"** button to get a preview of the placards. 
+At it's core, the only thing necessary for the program to function as it should is the bar of buttons and textboxes in line with the textbox with the place holder "Enter a country name"
+To use the program,ou can enter the [shortened version](#-shortened-country-name) of the country name, or the full country name onto this textbox and hit enter or click the "Add" button. If you want to generate more than one flag at a time you can specify the amount with the number input beside the textbox.</br>
+The button besides that are mainly for exporting. The share button prompts you to share the current placard configuration as a URL. The checkbox that appears when you do so, is for printer only mode, where the person who follows the link is unable to edit the predetermined configuration of placards.
+</br>
+The two joined buttons are for changing views, where you can toggle list and grid view. This is more of an accessability feature than a utility one. The clear list button, does exactly what it says on the tin, same with the print button. Just make sure all the images have loaded in the previews, or else some of the placards may not print correctly.
+
 
 #### Details
-The details for the placards are edited in the inputs below. If you already have a preview of the placards on the side, you can edit the values to see the values update real time.</br>
-There's a slider in the centre of the screen right at the bottom. If you get it, your cursor should change. If you drag that you can change the size of the side bar for easier viewing.
-
-#### Printing
-There are 3 things you need to be aware of when printing the placards. That is to:</br> 
-a) Remember to click the generate button before hand</br>
-b) Make sure all the images have loaded in the preview. If it isn't loading, try checking the Wi-Fi.</br>
-c) That you are printing in A4, or else it won't work
-
-if you reload the page while printing, the inputs might break. If this happens, open a new tab, then load the page again.
+The details for the placards are edited in the cluster of inputs below the title. The only issue with this is the school footer, where if you want to change it from the default (Which I don't see why you would) you have to enter the school name and hit enter. The upload button is for uploading a custom crest, and the remove button removes both crest and school name all together. It toggles to reset mode once you remove it so it's not the end of the world if you accidentally click it. Everything else is pretty self explanatory and you could learn from experimentation.
 
 #### <a id="head1234"></a> Shortened Country Name
 The country names that are stored are shortened. This means, that characters are abreviated where possible, and words that add nothing to the country name are removed.</br>
